@@ -1,5 +1,8 @@
 public class GameTable {
 
+    /* Variables used in GameTable class, used protected
+    because I wanted my subclasses to see all information
+    needed for stable work */
     protected char _table[][];
     protected char _visabletable[][];
     protected int _xsize;
@@ -7,7 +10,7 @@ public class GameTable {
     protected int _bombscount;
     protected boolean _ingame = false;
 
-
+    /* Constructor */
     public GameTable() {
 
     }
@@ -38,7 +41,8 @@ public class GameTable {
                 usedbombs++;
             }
         }
-        /* Calculating how much bombs are in 3x3 area(avoiding out of bound exception)
+        /* Calculating how much bombs are in 3x3 area
+        (avoiding out of bound exception)
         around each cell excluding bombs cell itself */
         for (int y = 0; y < _ysize; y++) {
             for (int x = 0; x < _xsize; x++) {
@@ -94,49 +98,37 @@ public class GameTable {
     }
 
     /* Makes game turn at specified coordinates */
-    public void DoTurn(int x, int y) throws ArrayIndexOutOfBoundsException {
-        if (IfNumber(_table[y][x])) {
-            DisplayElement(y, x);
-        }
+    public void DoTurn(int x, int y) {
+        if (IfNumber(_table[y][x])) DisplayElement(x, y);
+        if (_table[y][x] == '0') DisplaySomeElements(x, y);
         if (_table[y][x] == '*') {
             DisplayAllElements();
             GameOver();
         }
-        if (_table[y][x] == '0')
-            DisplaySomeElements(y, x);
         CheckIfWon();
-        if (x < 0 || y < 0 || x > _xsize || y > _ysize)
-            throw new ArrayIndexOutOfBoundsException();
     }
 
     /* Reveals part of empty cells if needed when empty cell selected */
     private void DisplaySomeElements(int x, int y) {
         for (int ypos = Math.max(0, y - 1); ypos < Math.min(y + 2, _ysize); ypos++) {
             for (int xpos = Math.max(x - 1, 0); xpos < Math.min(x + 2, _xsize); xpos++) {
-                if (IfNumber(_table[ypos][xpos]) && IfUnrevealed(xpos, ypos)) {
-                    DisplayElement(ypos, xpos);
-                }
+                if (IfNumber(_table[ypos][xpos]) && IfUnrevealed(xpos, ypos)) DisplayElement(xpos, ypos);
                 if (_table[ypos][xpos] == '0' && IfUnrevealed(xpos, ypos)) {
                     _visabletable[ypos][xpos] = _table[ypos][xpos];
-                    DisplaySomeElements(ypos, xpos);
+                    DisplaySomeElements(xpos, ypos);
                 }
-
             }
         }
     }
 
     /* Checks if number pressed */
     private boolean IfNumber(char i) {
-        if (i == '*' || i == '0') {
-            return false;
-        }
-        return true;
+        return i != '*' && i != '0';
     }
 
     /* Checks if table field unrevealed */
     private boolean IfUnrevealed(int x, int y) {
-        if (_visabletable[y][x] == '█') return true;
-        return false;
+        return _visabletable[y][x] == '█';
     }
 
     /* Reveals one field element */
@@ -159,8 +151,7 @@ public class GameTable {
         int blank = 0;
         for (int y = 0; y < _ysize; y++) {
             for (int x = 0; x < _xsize; x++) {
-                if (_visabletable[y][x] == '█')
-                    blank++;
+                if (_visabletable[y][x] == '█') blank++;
             }
         }
         return blank;
@@ -168,11 +159,8 @@ public class GameTable {
 
     /* Checks if field cleared enough to win the game */
     private void CheckIfWon() {
-        if (_bombscount >= BlanksLeft() && _ingame) {
-            GameWin();
-        }
+        if (_bombscount >= BlanksLeft() && _ingame) GameWin();
     }
-
 
     /* method returned when game is won */
     protected void GameWin() {
@@ -183,6 +171,5 @@ public class GameTable {
     public boolean GetGameStatus() {
         return _ingame;
     }
-
 
 }
