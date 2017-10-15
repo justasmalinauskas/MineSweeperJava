@@ -1,0 +1,19 @@
+import java.util.Scanner;
+
+public class ConsoleGameStart {
+
+    private static ConsoleGame Table = new ConsoleGame();
+
+    public static void main(String[] args) {
+        Table.CreateTable(9, 9, 10);
+        while (Table.GetGameStatus()) {
+            Table.DrawTableInConsole();
+            Scanner sc = new Scanner(System.in);
+            int i = sc.nextInt();
+            Scanner sc1 = new Scanner(System.in);
+            int j = sc1.nextInt();
+            Table.DoTurnInConsole(i, j);
+        }
+
+    }
+}
