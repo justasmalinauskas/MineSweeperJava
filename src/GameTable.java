@@ -12,6 +12,7 @@ public class GameTable {
 
     }
 
+    /* Sets all used local variables */
     private void SetVariables(int xsize, int ysize, int bombs) {
         _xsize = xsize;
         _ysize = ysize;
@@ -19,20 +20,21 @@ public class GameTable {
         _ingame = true;
     }
 
-    private int[][] GetEmptyIntTable() {
-        int _tableInterger[][] = new int[_ysize][_xsize];
+    /* Creates 'empty' table filled with 'zeroes' */
+    private void GetEmptyTable() {
+        _table = new char[_ysize][_xsize];
         for (int y = 0; y < _ysize; y++) {
-            for (int x = 0; x < _xsize; x++) _tableInterger[y][x] = 0;
+            for (int x = 0; x < _xsize; x++) _table[y][x] = '0';
         }
-        return _tableInterger;
     }
 
-    private int[][] SetBombs(int[][] intTable) {
+    /* Makes bombs for game also calculates nearby bombs in 3x3 array from bomb */
+    private void SetBombs() {
         int usedbombs = 0;
         while (usedbombs < _bombscount) {
             int[] xy = GetRandomInt();
-            if (intTable[xy[0]][xy[1]] != 9) {
-                intTable[xy[0]][xy[1]] = 9;
+            if (_table[xy[0]][xy[1]] != '*') {
+                _table[xy[0]][xy[1]] = '*';
                 usedbombs++;
             }
         }
@@ -40,12 +42,12 @@ public class GameTable {
         around each cell excluding bombs cell itself */
         for (int y = 0; y < _ysize; y++) {
             for (int x = 0; x < _xsize; x++) {
-                if (intTable[y][x] != 9) {
+                if (_table[y][x] != '*') {
                     for (int yt = Math.max(0, y - 1); yt < Math.min(y + 2, _ysize); yt++) {
                         for (int xt = Math.max(0, x - 1); xt < Math.min(x + 2, _xsize); xt++) {
                             if (xt != x || yt != y) {
-                                if (intTable[yt][xt] == 9) {
-                                    intTable[y][x]++;
+                                if (_table[yt][xt] == '*') {
+                                    _table[y][x] = IntToChar(CharToInt(_table[y][x]) + 1);
                                 }
                             }
                         }
@@ -53,9 +55,19 @@ public class GameTable {
                 }
             }
         }
-        return intTable;
     }
 
+    /* Converts character to integer */
+    private int CharToInt(char i) {
+        return Character.getNumericValue(i);
+    }
+
+    /* Converts integer to character */
+    private char IntToChar(int i) {
+        return Character.forDigit(i, 10);
+    }
+
+    /* Makes a random coordinate */
     private int[] GetRandomInt() {
         int[] answer = new int[2];
         answer[0] = (int) (Math.random() * _ysize);
@@ -63,41 +75,24 @@ public class GameTable {
         return answer;
     }
 
-    private void CreateRealTable(int[][] _tableInteger) {
-        _table = new char[_ysize][_xsize];
-        /* Setting interger table as real game table and setting bomb as * charatcher */
-        for (int y = 0; y < _ysize; y++) {
-            for (int x = 0; x < _xsize; x++) {
-                if (_tableInteger[y][x] == 9)
-                    _table[y][x] = '*';
-                else
-                    _table[y][x] = Character.forDigit(_tableInteger[y][x], 10);
-            }
-        }
-    }
-
+    /* Creates a new gameplay table for render to player */
     private void CreateUserTable() {
         _visabletable = new char[_ysize][_xsize];
         for (int y = 0; y < _ysize; y++) {
             for (int x = 0; x < _xsize; x++) {
                 _visabletable[y][x] = '█';
             }
-        }
+        }        /* Bombs generating as interger expressing bomb as number 9
+        because interger array is needed for calculating nearby bombs
+        and in 3x3 array 9 bombs nearby are impossible option */
+        //_tableInteger = SetBombs(_tableInteger);
     }
 
     /* Creates game table for new game */
     public void CreateTable(int xsize, int ysize, int bombs) {
-        /* Sets all needed local variables */
         SetVariables(xsize, ysize, bombs);
-        /* Initial game table in intergers */
-        int _tableInteger[][] = GetEmptyIntTable();
-        /* Bombs generating as interger expressing bomb as number 9
-        because interger array is needed for calculating nearby bombs
-        and in 3x3 array 9 bombs nearby are impossible option */
-        _tableInteger = SetBombs(_tableInteger);
-        /* Creating real game table */
-        CreateRealTable(_tableInteger);
-        /* Creates a new gameplay table for render to player */
+        GetEmptyTable();
+        SetBombs();
         CreateUserTable();
     }
 
@@ -136,10 +131,10 @@ public class GameTable {
 
     /* checks if number pressed */
     private boolean IfNumber(char i) {
-        if (i == '1' || i == '2' || i == '3' || i == '4' || i == '5' || i == '6' || i == '7' || i == '8') {
-            return true;
+        if (i == '*' || i == '0') {
+            return false;
         }
-        return false;
+        return true;
     }
 
     /* Reveals one field element */
@@ -157,11 +152,11 @@ public class GameTable {
         _ingame = false;
     }
 
-    /* Counts how many unreveald fields left in game table */
+    /* Counts how many unrevealed fields left in game table */
     private int BlanksLeft() {
         int blank = 0;
-        for (int x = 0; x < _visabletable[0].length; x++) {
-            for (int y = 0; y < _visabletable.length; y++) {
+        for (int y = 0; y < _ysize; y++) {
+            for (int x = 0; x < _xsize; x++) {
                 if (_visabletable[y][x] == '█')
                     blank++;
             }
