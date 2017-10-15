@@ -82,10 +82,7 @@ public class GameTable {
             for (int x = 0; x < _xsize; x++) {
                 _visabletable[y][x] = '█';
             }
-        }        /* Bombs generating as interger expressing bomb as number 9
-        because interger array is needed for calculating nearby bombs
-        and in 3x3 array 9 bombs nearby are impossible option */
-        //_tableInteger = SetBombs(_tableInteger);
+        }
     }
 
     /* Creates game table for new game */
@@ -95,7 +92,6 @@ public class GameTable {
         SetBombs();
         CreateUserTable();
     }
-
 
     /* Makes game turn at specified coordinates */
     public void DoTurn(int x, int y) throws ArrayIndexOutOfBoundsException {
@@ -117,10 +113,10 @@ public class GameTable {
     private void DisplaySomeElements(int x, int y) {
         for (int ypos = Math.max(0, y - 1); ypos < Math.min(y + 2, _ysize); ypos++) {
             for (int xpos = Math.max(x - 1, 0); xpos < Math.min(x + 2, _xsize); xpos++) {
-                if (IfNumber(_table[ypos][xpos])) {
+                if (IfNumber(_table[ypos][xpos]) && IfUnrevealed(xpos, ypos)) {
                     DisplayElement(ypos, xpos);
                 }
-                if (_table[ypos][xpos] == '0' && _visabletable[ypos][xpos] == '█') {
+                if (_table[ypos][xpos] == '0' && IfUnrevealed(xpos, ypos)) {
                     _visabletable[ypos][xpos] = _table[ypos][xpos];
                     DisplaySomeElements(ypos, xpos);
                 }
@@ -129,12 +125,18 @@ public class GameTable {
         }
     }
 
-    /* checks if number pressed */
+    /* Checks if number pressed */
     private boolean IfNumber(char i) {
         if (i == '*' || i == '0') {
             return false;
         }
         return true;
+    }
+
+    /* Checks if table field unrevealed */
+    private boolean IfUnrevealed(int x, int y) {
+        if (_visabletable[y][x] == '█') return true;
+        return false;
     }
 
     /* Reveals one field element */

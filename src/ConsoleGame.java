@@ -1,6 +1,6 @@
 public class ConsoleGame extends GameTable {
 
-    /* Displays current gameplay in console after player does a turn */
+    /* Displays current gameplay in Console after player does a turn */
     public void DoTurnInConsole(int x, int y) {
         DoTurn(x, y);
         for (int ypos = 0; ypos < _ysize; ypos++) {
@@ -11,7 +11,7 @@ public class ConsoleGame extends GameTable {
         }
     }
 
-    /* Displays current gameplay in console */
+    /* Displays current gameplay in Console */
     public void DoTurnInConsole() {
         for (int ypos = 0; ypos < _ysize; ypos++) {
             for (int xpos = 0; xpos < _xsize; xpos++) {
@@ -21,7 +21,7 @@ public class ConsoleGame extends GameTable {
         }
     }
 
-    /* Displays whole current game table in console window */
+    /* Displays whole current game table in Console*/
     public void DrawTableInConsole() {
         for (int y = 0; y < _ysize; y++) {
             for (int x = 0; x < _xsize; x++) {
@@ -31,18 +31,21 @@ public class ConsoleGame extends GameTable {
         }
     }
 
+    /* Creates game table for Console version */
     @Override
     public void CreateTable(int xsize, int ysize, int bombs) {
         super.CreateTable(xsize, ysize, bombs);
         DoTurnInConsole();
     }
 
+    /* Game Over for Console version */
     @Override
     protected void GameOver() {
         super.GameOver();
         System.out.println("Game Over!");
     }
 
+    /* Game Won for Console version */
     @Override
     protected void GameWin() {
         super.GameOver();
