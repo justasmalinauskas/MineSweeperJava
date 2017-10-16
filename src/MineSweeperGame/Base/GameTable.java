@@ -1,6 +1,8 @@
+package MineSweeperGame.Base;
+
 public class GameTable {
 
-    /* Variables used in GameTable class, used protected
+    /* Variables used in MineSweeperGame.Base.GameTable class, used protected
     because I wanted my subclasses to see all information
     needed for stable work */
     protected char _table[][];
@@ -49,11 +51,8 @@ public class GameTable {
                 if (_table[y][x] != '*') {
                     for (int yt = Math.max(0, y - 1); yt < Math.min(y + 2, _ysize); yt++) {
                         for (int xt = Math.max(0, x - 1); xt < Math.min(x + 2, _xsize); xt++) {
-                            if (xt != x || yt != y) {
-                                if (_table[yt][xt] == '*') {
-                                    _table[y][x] = IntToChar(CharToInt(_table[y][x]) + 1);
-                                }
-                            }
+                            if (xt != x || yt != y)
+                                if (_table[yt][xt] == '*') _table[y][x] = IntToChar(CharToInt(_table[y][x]) + 1);
                         }
                     }
                 }
@@ -99,6 +98,10 @@ public class GameTable {
 
     /* Makes game turn at specified coordinates */
     public void DoTurn(int x, int y) {
+        if (x < 0 || y < 0) {
+            OutOfTable();
+            return;
+        }
         if (IfNumber(_table[y][x])) DisplayElement(x, y);
         if (_table[y][x] == '0') DisplaySomeElements(x, y);
         if (_table[y][x] == '*') {
@@ -106,6 +109,11 @@ public class GameTable {
             GameOver();
         }
         CheckIfWon();
+
+    }
+
+    protected void OutOfTable() {
+
     }
 
     /* Reveals part of empty cells if needed when empty cell selected */

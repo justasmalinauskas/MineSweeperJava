@@ -1,3 +1,5 @@
+import MineSweeperGame.GUI.GUIGame;
+
 import javax.swing.*;
 
 public class GUIGameStart {

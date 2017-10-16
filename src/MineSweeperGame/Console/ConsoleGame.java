@@ -1,3 +1,7 @@
+package MineSweeperGame.Console;
+
+import MineSweeperGame.Base.GameTable;
+
 public class ConsoleGame extends GameTable {
 
     /* Displays current gameplay in Console after player does a turn */
@@ -29,6 +33,11 @@ public class ConsoleGame extends GameTable {
             }
             System.out.println();
         }
+    }
+
+    @Override
+    protected void OutOfTable() {
+        System.out.println("Koordinatės nėra tinkamos");
     }
 
     /* Creates game table for Console version */
