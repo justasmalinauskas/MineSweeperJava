@@ -16,6 +16,7 @@ public class ConsoleGameStart {
             Scanner sc1 = new Scanner(System.in);
             int j = sc1.nextInt();
             Table.DoTurnInConsole(i, j);
+            Table.DrawTableInConsole();
         }
 
     }
