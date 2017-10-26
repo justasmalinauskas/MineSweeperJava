@@ -7,9 +7,6 @@ public class GameRules {
     needed for stable work */
     protected Table _table;
     protected VisableTable _visabletable;
-    //protected int _xsize;
-    //protected int _ysize;
-    //protected int _bombscount;
     protected boolean _ingame = false;
 
     /* Constructor */

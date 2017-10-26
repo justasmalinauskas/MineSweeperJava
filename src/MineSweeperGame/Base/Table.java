@@ -79,14 +79,17 @@ public class Table {
         return _table;
     }
 
+    /* Get Table size in X dimension */
     public int GetXSize() {
         return _xsize;
     }
 
+    /* Get Table size in Y dimension */
     public int GetYSize() {
         return _ysize;
     }
 
+    /* Get bombs count in table */
     public int GetBombsCount() {
         return _bombs;
     }
