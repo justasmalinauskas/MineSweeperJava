@@ -1,4 +1,5 @@
 import MineSweeperGame.GUI.GUIGame;
+import MineSweeperGame.GUI.GamePanels;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -28,43 +29,27 @@ public class GUIGameStart extends JFrame {
             frame.setSize(800, 600);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setVisible(true);
-            panel1 = new JPanel();
-            splitPaneH = new JSplitPane( JSplitPane.HORIZONTAL_SPLIT );
-            JButton startbutton = new JButton("Start Game");
-            SpinnerModel modelx =
-                    new SpinnerNumberModel(9, //initial value
-                            5, //min
-                            50, //max
-                            1);
-            SpinnerModel modely =
-                    new SpinnerNumberModel(9, //initial value
-                            5, //min
-                            50, //max
-                            1);
-            SpinnerModel modelb =
-                    new SpinnerNumberModel(9, //initial value
-                            5, //min
-                            50, //max
-                            1);
-            JSpinner x = new JSpinner(modelx);
-            JSpinner y = new JSpinner(modely);
-            JSpinner b = new JSpinner(modelb);
-            panel1.add(new JLabel("Horizontal size:"));
-            panel1.add(x);
-            panel1.add(new JLabel("Vertical size:"));
-            panel1.add(y);
-            panel1.add(new JLabel("Bombs:"));
-            panel1.add(b);
-            panel1.add(startbutton);
+            panel1 = new GamePanels().toppanel( frame, Table);
             frame.add(panel1, BorderLayout.NORTH);
+            JButton startbutton = new JButton("Start Game");
+            panel1.add(startbutton);
             startbutton.addActionListener(new ActionListener() {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    Table.StartGame(frame, (Integer) x.getValue(), (Integer) y.getValue(), (Integer) b.getValue());
+                    Component[] all_comp=panel1.getComponents();
+                    int[] tabledetails = new int[3];
+                    int count = 0;
+                    for(int i=0;i<=all_comp.length;i++) {
+                        if (all_comp[i] instanceof JSpinner) {
+                            tabledetails[count] = (int) ((JSpinner)all_comp[i]).getValue();
+                            count++;
+                            // this is the text. Do what you want with it....
+                        }
+                    }
+                    Table.StartGame(frame, (Integer) x.getValue(), (Integer) y.getValue(), (Integer) b.getValue());//need to extreact values
                 }
             });
-
         });
     }
 
