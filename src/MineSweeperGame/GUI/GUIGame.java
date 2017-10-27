@@ -1,19 +1,16 @@
 package MineSweeperGame.GUI;
 
 import MineSweeperGame.Base.GameRules;
-import MineSweeperGame.Base.Table;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GUIGame extends GameRules {
 
     private JPanel panel;
     private JFrame _frame;
 
-    public JPanel Display() {
+    private JPanel Display() {
         if (_table != null && _visabletable != null) {
             JPanel gametable = new JPanel();
             gametable.setLayout(new GridLayout(_table.GetYSize(), _table.GetXSize()));
@@ -32,7 +29,9 @@ public class GUIGame extends GameRules {
                                 }
                             }
                         }
-                        catch (NullPointerException ex){}
+                        catch (NullPointerException ex) {
+                            System.out.println(ex.getMessage());
+                        }
                     });
                     gametable.add(buttons[y][x]);
                 }
@@ -59,7 +58,7 @@ public class GUIGame extends GameRules {
         _frame.setVisible(true);
     }
 
-    public void EndGame() {
+    private void EndGame() {
         _frame.getContentPane().remove(panel);
         _frame.getContentPane().repaint();
         CleanTable();
@@ -85,6 +84,7 @@ public class GUIGame extends GameRules {
     protected void GameWin() {
         super.GameOver();
         JOptionPane.showMessageDialog(null, "You Won!");
+        EndGame();
     }
 
 

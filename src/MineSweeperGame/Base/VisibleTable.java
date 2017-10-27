@@ -4,7 +4,7 @@ public class VisibleTable {
 
     private char[][] _visabletable;
 
-    public VisibleTable(Table t) {
+    VisibleTable(Table t) {
         CreateVisableTable(t);
     }
 
@@ -26,7 +26,7 @@ public class VisibleTable {
     }
 
     /* Reveals part of empty cells if needed when empty cell selected */
-    public void DisplayElements(Table t, int x, int y) {
+    void DisplayElements(Table t, int x, int y) {
         int xsize = _visabletable[0].length;
         int ysize = _visabletable.length;
         for (int ypos = Math.max(0, y - 1); ypos < Math.min(y + 2, ysize); ypos++) {
@@ -41,27 +41,26 @@ public class VisibleTable {
     }
 
     /* Reveals whole game table to player */
-    public void DisplayAllElements(Table t) {
+    void DisplayAllElements(Table t) {
         _visabletable = t.GetTable();
     }
 
     /* Reveals one field element */
-    public void DisplayElement(Table t, int x, int y) { _visabletable[y][x] = t.GetElement(x, y); }
+    void DisplayElement(Table t, int x, int y) { _visabletable[y][x] = t.GetElement(x, y); }
 
     /* Counts how many unrevealed fields left in game table */
     private int BlanksLeft() {
         int blank = 0;
-        for (int y = 0; y < _visabletable.length; y++) {
+        for (char[] a_visabletable : _visabletable) {
             for (int x = 0; x < _visabletable[0].length; x++) {
-                if (_visabletable[y][x] == '+') blank++;
+                if (a_visabletable[x] == '+') blank++;
             }
         }
         return blank;
     }
 
-    public boolean PossibleWin(int bombs) {
-        if (bombs >= BlanksLeft()) return true;
-        return false;
+    boolean PossibleWin(int bombs) {
+        return bombs >= BlanksLeft();
     }
 
 

@@ -7,14 +7,14 @@ public class GameRules {
     needed for stable work */
     protected Table _table;
     protected VisibleTable _visabletable;
-    protected boolean _ingame = false;
+    private boolean _ingame = false;
 
     /* Constructor */
-    public GameRules() {
+    protected GameRules() {
 
     }
 
-    public void CleanTable() {
+    protected void CleanTable() {
         _table = null;
         _visabletable = null;
     }
@@ -27,7 +27,7 @@ public class GameRules {
     }
 
     /* Makes game turn at specified coordinates */
-    public void DoTurn(int x, int y) {
+    protected void DoTurn(int x, int y) {
         if (_table.IsOutOfBounds(x, y)) {
             OutOfTable();
             return;

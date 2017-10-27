@@ -2,9 +2,9 @@ import MineSweeperGame.Console.ConsoleGame;
 
 import java.util.Scanner;
 
-public class ConsoleGameStart {
+class ConsoleGameStart {
 
-    private static ConsoleGame Table = new ConsoleGame();
+    private static final ConsoleGame Table = new ConsoleGame();
 
     public static void main(String[] args) {
         Table.CreateTable(9, 9, 10);

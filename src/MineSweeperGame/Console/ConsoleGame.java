@@ -21,7 +21,7 @@ public class ConsoleGame extends GameRules {
     }
 
     /* Displays current gameplay in Console */
-    public void DoTurnInConsole() {
+    private void DoTurnInConsole() {
         Display();
     }
 

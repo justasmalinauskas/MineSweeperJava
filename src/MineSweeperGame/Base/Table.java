@@ -3,11 +3,11 @@ package MineSweeperGame.Base;
 public class Table {
 
     private char[][] _table;
-    private int _xsize;
-    private int _ysize;
-    private int _bombs;
+    private final int _xsize;
+    private final int _ysize;
+    private final int _bombs;
 
-    public Table(int xsize, int ysize, int bombs) {
+    Table(int xsize, int ysize, int bombs) {
         this._xsize = xsize;
         this._ysize = ysize;
         this._bombs = bombs;
@@ -68,14 +68,8 @@ public class Table {
         return answer;
     }
 
-    /* Checks if number pressed */
-    private boolean IfNumber(char i) {
-        return i != '*' && i != '0';
-    }
-
-
     /* Returns Table to other classes */
-    public char[][] GetTable() {
+    char[][] GetTable() {
         return _table;
     }
 
@@ -90,7 +84,7 @@ public class Table {
     }
 
     /* Get bombs count in table */
-    public int GetBombsCount() {
+    int GetBombsCount() {
         return _bombs;
     }
 
@@ -98,24 +92,21 @@ public class Table {
         return _table[y][x];
     }
 
-    public boolean IsOutOfBounds(int x, int y) {
-        if (x < 0 || y < 0 || x > _xsize || y > _ysize) return true;
-        return false;
+    boolean IsOutOfBounds(int x, int y) {
+        return x < 0 || y < 0 || x > _xsize || y > _ysize;
     }
 
-    public boolean IsNumber(int x, int y) {
-        if (_table[y][x] != '*' && _table[y][x] != '0') return true;
-        return false;
+    /* Checks if number pressed */
+    boolean IsNumber(int x, int y) {
+        return _table[y][x] != '*' && _table[y][x] != '0';
     }
 
-    public boolean IsNumberZero(int x, int y) {
-        if (_table[y][x] == '0') return true;
-        return false;
+    boolean IsNumberZero(int x, int y) {
+        return _table[y][x] == '0';
     }
 
-    public boolean IsBomb(int x, int y) {
-        if (_table[y][x] == '*') return true;
-        return false;
+    boolean IsBomb(int x, int y) {
+        return _table[y][x] == '*';
     }
 
 }
