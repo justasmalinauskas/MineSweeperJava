@@ -6,7 +6,7 @@ public class GameRules {
     because I wanted my subclasses to see all information
     needed for stable work */
     protected Table _table;
-    protected VisableTable _visabletable;
+    protected VisibleTable _visabletable;
     protected boolean _ingame = false;
 
     /* Constructor */
@@ -14,10 +14,15 @@ public class GameRules {
 
     }
 
+    public void CleanTable() {
+        _table = null;
+        _visabletable = null;
+    }
+
     /* Creates game table for new game */
     public void CreateTable(int xsize, int ysize, int bombs) {
         _table = new Table(xsize, ysize, bombs);
-        _visabletable = new VisableTable(_table);
+        _visabletable = new VisibleTable(_table);
         _ingame = true;
     }
 
@@ -47,7 +52,8 @@ public class GameRules {
 
     /* Checks if field cleared enough to win the game */
     private void CheckIfWon() {
-        if (_visabletable.PossibleWin(_table.GetBombsCount()) && _ingame) GameWin();
+        if (_table != null && _visabletable != null)
+            if (_visabletable.PossibleWin(_table.GetBombsCount()) && _ingame) GameWin();
     }
 
     /* method returned when game is won */

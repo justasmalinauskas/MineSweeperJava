@@ -1,15 +1,15 @@
 package MineSweeperGame.Base;
 
-public class VisableTable {
+public class VisibleTable {
 
     private char[][] _visabletable;
 
-    public VisableTable(Table t) {
-        CreateUserTable(t);
+    public VisibleTable(Table t) {
+        CreateVisableTable(t);
     }
 
     /* Creates a new gameplay table for render to player */
-    private void CreateUserTable(Table t) {
+    private void CreateVisableTable(Table t) {
         int xsize = t.GetXSize();
         int ysize = t.GetYSize();
         _visabletable = new char[ysize][xsize];
