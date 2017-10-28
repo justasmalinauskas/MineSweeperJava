@@ -43,9 +43,4 @@ public class GamePanels {
         panel.add(b);
         return panel;
     }
-
-    /*public JPanel bottompanel(JFrame frame, GUIGame table) {
-
-        return null;
-    }*/
 }

@@ -47,6 +47,7 @@ public class GameRules {
 
     /* Prints that game over and stops current game */
     protected void GameOver() {
+        _visabletable.SetTable(_table.GetTable());
         _ingame = false;
     }
 
@@ -57,9 +58,7 @@ public class GameRules {
     }
 
     /* method returned when game is won */
-    protected void GameWin() {
-        GameOver();
-    }
+    protected void GameWin() { GameOver(); }
 
     /* Returns game status to player */
     public boolean GetGameStatus() {

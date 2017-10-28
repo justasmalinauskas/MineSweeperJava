@@ -73,4 +73,8 @@ public class VisibleTable {
     public char GetElement(int x, int y) {
         return _visabletable[y][x];
     }
+
+    void SetTable (char[][] table) {
+        _visabletable = table;
+    }
 }

@@ -26,7 +26,9 @@ class GUIGameStart extends JFrame {
             panel1.add(startbutton);
             startbutton.addActionListener(e -> {
                 GamePanels.GetValues();
-                Table.StartGame(frame, GamePanels.X, GamePanels.Y, GamePanels.B);
+                frame.add(Table.StartGame(GamePanels.X, GamePanels.Y, GamePanels.B));
+                frame.getContentPane().revalidate();
+                frame.setVisible(true);
             });
         });
     }
