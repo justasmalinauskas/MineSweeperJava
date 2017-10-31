@@ -34,19 +34,26 @@ public class GUIGame extends GameRules {
             }
             return gametable;
         }
-        return null;
+        return new JPanel();
     }
 
     private void SetButtonsValues() {
-        try {
-            for (int y = 0; y < _table.GetYSize(); y++) {
-                for (int x = 0; x < _table.GetXSize(); x++) {
-                    buttons[y][x].setText(String.valueOf(_visabletable.GetElement(x, y)));
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    for (int y = 0; y < _table.GetYSize(); y++) {
+                        for (int x = 0; x < _table.GetXSize(); x++) {
+                            buttons[y][x].setText(String.valueOf(_visabletable.GetElement(x, y)));
+                            buttons[y][x].revalidate();
+                            buttons[y][x].repaint();
+                            buttons[y][x].setVisible(true);
+                        }
+                    }
+                } catch (NullPointerException ex) {
+                    System.out.println(ex.getMessage());
                 }
             }
-        } catch (NullPointerException ex) {
-            System.out.println(ex.getMessage());
-        }
+        });
     }
 
 
@@ -56,11 +63,20 @@ public class GUIGame extends GameRules {
      * @param b Count of bombs in game, it should be less than half of all game table
      */
     public JPanel StartGame(int x, int y, int b) {
-        if (buttons != null)
-            EndGame();
+        if(panel != null) {
+            if(panel.getComponents().length > 0) {
+                System.out.println("Gametable has " + panel.getComponents().length + " buttons");
+                EndGame();
+            }
+        }
         if (b < x * y / 2 + 1) {
             CreateTable(x, y, b);
             panel = this.Display();
+            panel.revalidate();
+            panel.repaint();
+            SetButtonsValues();
+            panel.setVisible(true);
+
             return panel;
         } else {
             TooMuchBombs();
@@ -69,6 +85,7 @@ public class GUIGame extends GameRules {
     }
 
     public void EndGame() {
+        //panel.getComponents().length;
         panel.removeAll();
         panel.revalidate();
         panel.repaint();

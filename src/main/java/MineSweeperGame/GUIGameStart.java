@@ -35,8 +35,12 @@ class GUIGameStart extends JFrame {
     public static void main(String[] args) {
         try {
             // Sets UI as native, used in OS.
-            UIManager.setLookAndFeel(
-                    UIManager.getSystemLookAndFeelClassName());
+            if (System.getProperty("os.name").toLowerCase().contains("windows"))
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+            else if (System.getProperty("os.name").toLowerCase().contains("linux"))
+                UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+            else
+                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         }
         catch (UnsupportedLookAndFeelException e) {
 
@@ -53,6 +57,7 @@ class GUIGameStart extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 GUI();
+                System.out.println(System.getProperty("os.name"));
             }
         });
     }
@@ -101,7 +106,7 @@ class GUIGameStart extends JFrame {
         }
         GetValues();
         component = Table.StartGame(X, Y, B);
-        frame.add(component, BorderLayout.SOUTH);
+        frame.add(component, BorderLayout.CENTER);
         frame.repaint();
         frame.revalidate();
         System.out.println(frame.getComponents().length);
