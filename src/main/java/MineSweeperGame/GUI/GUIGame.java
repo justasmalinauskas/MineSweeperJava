@@ -40,8 +40,7 @@ public class GUIGame extends GameRules {
                     buttons[ypos1][xpos1].setText(String.valueOf(_visabletable.GetElement(xpos1, ypos1)));
                 }
             }
-        }
-        catch (NullPointerException ex) {
+        } catch (NullPointerException ex) {
             System.out.println(ex.getMessage());
         }
     }
@@ -53,14 +52,13 @@ public class GUIGame extends GameRules {
      * @param b Count of bombs in game, it should be less than half of all game table
      */
     public JPanel StartGame(int x, int y, int b) {
-        if (b < x*y/2+1) {
-            CreateTable(x,y,b);
+        if (b < x * y / 2 + 1) {
+            CreateTable(x, y, b);
             panel = this.Display();
             panel.revalidate();
             panel.repaint();
             return panel;
-        }
-        else {
+        } else {
             TooMuchBombs();
         }
         return null;

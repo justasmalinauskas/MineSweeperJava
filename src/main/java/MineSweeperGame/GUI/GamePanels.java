@@ -6,15 +6,17 @@ import javax.swing.*;
 public class GamePanels {
 
 
+    public static int X, Y, B;
     private static JSpinner x;
     private static JSpinner y;
     private static JSpinner b;
-    public static int X, Y, B;
+
     public static void GetValues() {
-        X = (Integer)x.getValue();
-        Y = (Integer)y.getValue();
-        B = (Integer)b.getValue();
+        X = (Integer) x.getValue();
+        Y = (Integer) y.getValue();
+        B = (Integer) b.getValue();
     }
+
     public static JPanel toppanel() {
         JPanel panel = new JPanel();
         SpinnerModel modelx =

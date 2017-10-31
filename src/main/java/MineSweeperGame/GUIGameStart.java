@@ -9,12 +9,29 @@ import java.awt.*;
 
 class GUIGameStart extends JFrame {
 
+    private static final GUIGame Table = new GUIGame();
     private static JFrame frame;
     private static JPanel panel1;
-
-    private static final GUIGame Table = new GUIGame();
+    private static JPanel panel2;
 
     public static void main(String[] args) {
+        try {
+            // Sets UI as native, used in OS.
+            UIManager.setLookAndFeel(
+                    UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (UnsupportedLookAndFeelException e) {
+
+        }
+        catch (ClassNotFoundException e) {
+            // handle exception
+        }
+        catch (InstantiationException e) {
+            // handle exception
+        }
+        catch (IllegalAccessException e) {
+            // handle exception
+        }
         javax.swing.SwingUtilities.invokeLater(() -> {
             frame = new JFrame("MineSweeperJava");
             frame.setSize(800, 600);
@@ -26,7 +43,7 @@ class GUIGameStart extends JFrame {
             panel1.add(startbutton);
             startbutton.addActionListener(e -> {
                 GamePanels.GetValues();
-                frame.add(Table.StartGame(GamePanels.X, GamePanels.Y, GamePanels.B));
+                frame.add(Table.StartGame(GamePanels.X, GamePanels.Y, GamePanels.B), BorderLayout.CENTER);
                 frame.getContentPane().revalidate();
                 frame.setVisible(true);
             });

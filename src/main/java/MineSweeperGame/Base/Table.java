@@ -2,10 +2,10 @@ package MineSweeperGame.Base;
 
 public class Table {
 
-    private char[][] _table;
     private final int _xsize;
     private final int _ysize;
     private final int _bombs;
+    private char[][] _table;
 
     Table(int xsize, int ysize, int bombs) {
         this._xsize = xsize;

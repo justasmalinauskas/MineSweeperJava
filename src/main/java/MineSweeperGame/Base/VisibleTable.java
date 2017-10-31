@@ -33,8 +33,8 @@ public class VisibleTable {
             for (int xpos = Math.max(0, x - 1); xpos < Math.min(x + 2, xsize); xpos++) {
                 if (t.IsNumber(xpos, ypos) && IfUnrevealed(xpos, ypos)) DisplayElement(t, xpos, ypos);
                 if (t.IsNumberZero(xpos, ypos) && IfUnrevealed(xpos, ypos)) {
-                        _visabletable[ypos][xpos] = t.GetElement(xpos, ypos);
-                        DisplayElements(t, xpos, ypos);
+                    _visabletable[ypos][xpos] = t.GetElement(xpos, ypos);
+                    DisplayElements(t, xpos, ypos);
                 }
             }
         }
@@ -46,7 +46,9 @@ public class VisibleTable {
     }
 
     /* Reveals one field element */
-    void DisplayElement(Table t, int x, int y) { _visabletable[y][x] = t.GetElement(x, y); }
+    void DisplayElement(Table t, int x, int y) {
+        _visabletable[y][x] = t.GetElement(x, y);
+    }
 
     /* Counts how many unrevealed fields left in game table */
     private int BlanksLeft() {
@@ -74,7 +76,7 @@ public class VisibleTable {
         return _visabletable[y][x];
     }
 
-    void SetTable (char[][] table) {
+    void SetTable(char[][] table) {
         _visabletable = table;
     }
 }

@@ -58,7 +58,9 @@ public class GameRules {
     }
 
     /* method returned when game is won */
-    protected void GameWin() { GameOver(); }
+    protected void GameWin() {
+        GameOver();
+    }
 
     /* Returns game status to player */
     public boolean GetGameStatus() {
