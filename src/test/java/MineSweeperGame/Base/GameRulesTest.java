@@ -19,8 +19,6 @@ public class GameRulesTest extends GameRules {
     @Test
     public void startbadGame() throws TooManyBombs {
         GameRules testTable = new GameRules();
-
-        assertEquals(false, testTable.GetGameStatus());
         try
         {
             testTable.CreateTable(5,5,25);
