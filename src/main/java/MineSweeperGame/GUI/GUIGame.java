@@ -6,11 +6,16 @@ import MineSweeperGame.Base.GameRules;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class GUIGame extends GameRules {
 
     private JPanel panel;
     private JButton[][] buttons = null;
+    private GetImages images;
+
+    public GUIGame() throws IOException {
+    }
 
     private JPanel Display() {
         if (_table != null && _visabletable != null) {
@@ -22,7 +27,8 @@ public class GUIGame extends GameRules {
                 for (int xpos = 0; xpos < _table.GetXSize(); xpos++) {
                     final int y = ypos;
                     final int x = xpos;
-                    buttons[y][x] = new JButton(String.valueOf(_visabletable.GetElement(x, y)));
+                    //buttons[y][x] = new JButton(String.valueOf(_visabletable.GetElement(x, y)));
+                    buttons[y][x] = new JButton();
                     //buttons[y][x].revalidate();
                     //buttons[y][x].repaint();
                     //buttons[y][x].setVisible(true);
@@ -45,17 +51,18 @@ public class GUIGame extends GameRules {
 
     private void SetButtonsValues() {
         EventQueue.invokeLater(() -> {
-            try {
-                for (int y = 0; y < _table.GetYSize(); y++) {
-                    for (int x = 0; x < _table.GetXSize(); x++) {
-                        buttons[y][x].setText(String.valueOf(_visabletable.GetElement(x, y)));
-                        buttons[y][x].revalidate();
-                        buttons[y][x].repaint();
-                        buttons[y][x].setVisible(true);
-                    }
+            for (int y = 0; y < _table.GetYSize(); y++) {
+                for (int x = 0; x < _table.GetXSize(); x++) {
+                    //buttons[y][x].setText(String.valueOf(_visabletable.GetElement(x, y)));
+                    //ImageIcon icon = new ImageIcon(GetButtonIconPath(x, y));
+                    //ImageIcon icon = getClass().getClassLoader().getResource(GetButtonIconPath(x, y)).getFile();
+                    //Image image = GetButtonIconPath(x, y);
+                    ImageIcon icon = GetButtonIconPath(x, y);//new ImageIcon(image.getScaledInstance(21,-1,Image.SCALE_FAST));
+                    //Image image = ImageIO.read(new File(getClass().getClassLoader().getResource(GetButtonIconPath(x, y)).getFile()));
+                    //Icon icon = new ImageIcon(image);
+                    buttons[y][x].setIcon(icon);
+
                 }
-            } catch (NullPointerException ex) {
-                System.out.println(ex.getMessage());
             }
         });
     }
@@ -75,6 +82,11 @@ public class GUIGame extends GameRules {
             }
         }
         try {
+            try {
+                images = new GetImages();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
             CreateTable(x, y, b);
             panel = this.Display();
             panel.revalidate();
@@ -120,6 +132,32 @@ public class GUIGame extends GameRules {
         SetButtonsValues();
         JOptionPane.showMessageDialog(null, "You Won!");
         //EndGame();
+    }
+
+    private ImageIcon GetButtonIconPath(int x, int y) {
+        if (_visabletable.GetElement(x, y) == '0')
+            return images.zero;
+        if (_visabletable.GetElement(x, y) == '1')
+            return images.one;
+        if (_visabletable.GetElement(x, y) == '2')
+            return images.two;;
+        if (_visabletable.GetElement(x, y) == '3')
+            return images.three;
+        if (_visabletable.GetElement(x, y) == '4')
+            return images.four;
+        if (_visabletable.GetElement(x, y) == '5')
+            return images.five;
+        if (_visabletable.GetElement(x, y) == '6')
+            return images.six;
+        if (_visabletable.GetElement(x, y) == '7')
+            return images.seven;
+        if (_visabletable.GetElement(x, y) == '8')
+            return images.eight;
+        if (_visabletable.GetElement(x, y) == '*')
+            return images.bomb;
+        if (_visabletable.GetElement(x, y) == '+')
+            return images.block;
+        return null;
     }
 
 
