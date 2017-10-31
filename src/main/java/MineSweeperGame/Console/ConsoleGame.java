@@ -1,5 +1,7 @@
 package MineSweeperGame.Console;
 
+import MineSweeperGame.Base.Exceptions.TooManyBombs;
+import MineSweeperGame.Base.Exceptions.TurnIsOutOfBounds;
 import MineSweeperGame.Base.GameRules;
 
 public class ConsoleGame extends GameRules {
@@ -15,7 +17,7 @@ public class ConsoleGame extends GameRules {
 
 
     /* Displays current gameplay in Console after player does a turn */
-    public void DoTurnInConsole(int x, int y) {
+    public void DoTurnInConsole(int x, int y) throws TurnIsOutOfBounds {
         DoTurn(x, y);
         Display();
     }
@@ -32,7 +34,7 @@ public class ConsoleGame extends GameRules {
 
     /* Creates game table for Console version */
     @Override
-    public void CreateTable(int xsize, int ysize, int bombs) {
+    public void CreateTable(int xsize, int ysize, int bombs) throws TooManyBombs {
         super.CreateTable(xsize, ysize, bombs);
         DoTurnInConsole();
     }

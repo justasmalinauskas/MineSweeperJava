@@ -1,5 +1,7 @@
 package MineSweeperGame.Base;
 
+import MineSweeperGame.Base.Exceptions.*;
+
 public class GameRules {
 
     /* Variables used in MineSweeperGame.Base.GameRules class, used protected
@@ -20,25 +22,31 @@ public class GameRules {
     }
 
     /* Creates game table for new game */
-    public void CreateTable(int xsize, int ysize, int bombs) {
-        _table = new Table(xsize, ysize, bombs);
-        _visabletable = new VisibleTable(_table);
-        _ingame = true;
+    public void CreateTable(int xsize, int ysize, int bombs) throws TooManyBombs {
+        if (bombs < (xsize * ysize / 2) + 1) {
+            _table = new Table(xsize, ysize, bombs);
+            _visabletable = new VisibleTable(_table);
+            _ingame = true;
+        }
+        else
+            throw new TooManyBombs();
     }
 
     /* Makes game turn at specified coordinates */
-    protected void DoTurn(int x, int y) {
-        if (_table.IsOutOfBounds(x, y)) {
-            OutOfTable();
-            return;
+    protected void DoTurn(int x, int y) throws TurnIsOutOfBounds{
+        if (!_table.IsOutOfBounds(x, y)) {
+
+            if (_table.IsNumber(x, y)) _visabletable.DisplayElement(_table, x, y);
+            if (_table.IsNumberZero(x, y)) _visabletable.DisplayElements(_table, x, y);
+            if (_table.IsBomb(x, y)) {
+                _visabletable.DisplayAllElements(_table);
+                GameOver();
+            }
+            CheckIfWon();
         }
-        if (_table.IsNumber(x, y)) _visabletable.DisplayElement(_table, x, y);
-        if (_table.IsNumberZero(x, y)) _visabletable.DisplayElements(_table, x, y);
-        if (_table.IsBomb(x, y)) {
-            _visabletable.DisplayAllElements(_table);
-            GameOver();
-        }
-        CheckIfWon();
+        else
+            throw new TurnIsOutOfBounds();
+
     }
 
     protected void OutOfTable() {

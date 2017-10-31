@@ -1,5 +1,7 @@
 package MineSweeperGame.GUI;
 
+import MineSweeperGame.Base.Exceptions.TooManyBombs;
+import MineSweeperGame.Base.Exceptions.TurnIsOutOfBounds;
 import MineSweeperGame.Base.GameRules;
 
 import javax.swing.*;
@@ -25,7 +27,11 @@ public class GUIGame extends GameRules {
                     //buttons[y][x].repaint();
                     //buttons[y][x].setVisible(true);
                     buttons[y][x].addActionListener(e -> {
-                        DoTurn(x, y);
+                        try {
+                            DoTurn(x, y);
+                        } catch (TurnIsOutOfBounds ex) {
+                            ex.Message();
+                        }
                         SetButtonsValues();
                     });
                     gametable.add(buttons[y][x]);
@@ -55,29 +61,30 @@ public class GUIGame extends GameRules {
     }
 
     /* Creates game table for GUI version */
+
     /**
      * @param x Number of rows in game
      * @param y Number of columns in game
      * @param b Count of bombs in game, it should be less than half of all game table
      */
     public JPanel StartGame(int x, int y, int b) {
-        if(panel != null) {
-            if(panel.getComponents().length > 0) {
+        if (panel != null) {
+            if (panel.getComponents().length > 0) {
                 System.out.println("Gametable has " + panel.getComponents().length + " buttons");
                 EndGame();
             }
         }
-        if (b < x * y / 2 + 1) {
+        try {
             CreateTable(x, y, b);
             panel = this.Display();
             panel.revalidate();
             panel.repaint();
             SetButtonsValues();
             panel.setVisible(true);
-
             return panel;
-        } else {
-            TooMuchBombs();
+        }
+        catch (TooManyBombs ex) {
+         ex.Message();
         }
         return null;
     }
@@ -95,8 +102,6 @@ public class GUIGame extends GameRules {
         JOptionPane.showMessageDialog(null, "You can not play a game when more than half field has bombs!");
 
     }
-
-
 
 
     /* Game Over for GUI version */
