@@ -31,13 +31,30 @@ public class GameRulesTest extends GameRules {
     }
 
     @Test
-    public void OutOfBoundsTest() throws TooManyBombs {
+    public void OutOfBoundsTestBigger() throws TooManyBombs {
         int testFieldConst = 9;
         GameRules testTable = new GameRules();
         testTable.CreateTable(testFieldConst,testFieldConst,testFieldConst);
         try
         {
             final Integer badcoord = testFieldConst+1;
+            testTable.DoTurn(badcoord,badcoord);
+            fail("Should have thrown TurnIsOutOfBounds but did not!");
+        }
+        catch (final TurnIsOutOfBounds e) {
+            final String msg = "Coordinate you entered is out of field!";
+            assertEquals(msg, e.getMessage());
+        }
+    }
+
+    @Test
+    public void OutOfBoundsTestSmaller() throws TooManyBombs {
+        int testFieldConst = 9;
+        GameRules testTable = new GameRules();
+        testTable.CreateTable(testFieldConst,testFieldConst,testFieldConst);
+        try
+        {
+            final Integer badcoord = -1;
             testTable.DoTurn(badcoord,badcoord);
             fail("Should have thrown TurnIsOutOfBounds but did not!");
         }
