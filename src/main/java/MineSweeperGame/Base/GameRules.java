@@ -49,10 +49,6 @@ public class GameRules {
 
     }
 
-    protected void OutOfTable() {
-
-    }
-
     /* Prints that game over and stops current game */
     protected void GameOver() {
         _visabletable.SetTable(_table.GetTable());

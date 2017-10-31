@@ -27,10 +27,6 @@ public class ConsoleGame extends GameRules {
         Display();
     }
 
-    @Override
-    protected void OutOfTable() {
-        System.out.println("Koordinatės nėra tinkamos");
-    }
 
     /* Creates game table for Console version */
     @Override

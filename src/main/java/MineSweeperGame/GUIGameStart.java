@@ -4,7 +4,6 @@ import MineSweeperGame.GUI.GUIGame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 
 class GUIGameStart extends JFrame {
@@ -41,11 +40,7 @@ class GUIGameStart extends JFrame {
         catch (UnsupportedLookAndFeelException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
             System.out.println(e.getMessage());
         }
-        try {
-            Table = new GUIGame();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        Table = new GUIGame();
         SwingUtilities.invokeLater(GUIGameStart::GUI);
     }
 

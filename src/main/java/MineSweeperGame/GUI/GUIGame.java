@@ -14,7 +14,7 @@ public class GUIGame extends GameRules {
     private JButton[][] buttons = null;
     private GetImages images;
 
-    public GUIGame() throws IOException {
+    public GUIGame() {
     }
 
     private JPanel Display() {
@@ -110,10 +110,6 @@ public class GUIGame extends GameRules {
         CleanTable();
     }
 
-    private void TooMuchBombs() {
-        JOptionPane.showMessageDialog(null, "You can not play a game when more than half field has bombs!");
-
-    }
 
 
     /* Game Over for GUI version */
@@ -136,27 +132,27 @@ public class GUIGame extends GameRules {
 
     private ImageIcon GetButtonIconPath(int x, int y) {
         if (_visabletable.GetElement(x, y) == '0')
-            return images.zero;
+            return images.GetImage(0);
         if (_visabletable.GetElement(x, y) == '1')
-            return images.one;
+            return images.GetImage(1);
         if (_visabletable.GetElement(x, y) == '2')
-            return images.two;;
+            return images.GetImage(2);
         if (_visabletable.GetElement(x, y) == '3')
-            return images.three;
+            return images.GetImage(3);
         if (_visabletable.GetElement(x, y) == '4')
-            return images.four;
+            return images.GetImage(4);
         if (_visabletable.GetElement(x, y) == '5')
-            return images.five;
+            return images.GetImage(5);
         if (_visabletable.GetElement(x, y) == '6')
-            return images.six;
+            return images.GetImage(6);
         if (_visabletable.GetElement(x, y) == '7')
-            return images.seven;
+            return images.GetImage(7);
         if (_visabletable.GetElement(x, y) == '8')
-            return images.eight;
-        if (_visabletable.GetElement(x, y) == '*')
-            return images.bomb;
+            return images.GetImage(8);
         if (_visabletable.GetElement(x, y) == '+')
-            return images.block;
+            return images.GetImage(9);
+        if (_visabletable.GetElement(x, y) == '*')
+            return images.GetImage(10);
         return null;
     }
 
