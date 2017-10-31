@@ -65,12 +65,6 @@ public class VisibleTable {
         return bombs >= BlanksLeft();
     }
 
-
-    /* Returns all game table as 2D char array */
-    public char[][] GetTable() {
-        return _visabletable;
-    }
-
     /* Returns one element from visable game table */
     public char GetElement(int x, int y) {
         return _visabletable[y][x];

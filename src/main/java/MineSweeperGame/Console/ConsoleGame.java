@@ -25,16 +25,6 @@ public class ConsoleGame extends GameRules {
         Display();
     }
 
-    /* Displays whole current game table in Console*/
-    public void DrawTableInConsole() {
-        for (int y = 0; y < _table.GetYSize(); y++) {
-            for (int x = 0; x < _table.GetXSize(); x++) {
-                System.out.print(_table.GetElement(x, y) + "\t");
-            }
-            System.out.println();
-        }
-    }
-
     @Override
     protected void OutOfTable() {
         System.out.println("Koordinatės nėra tinkamos");

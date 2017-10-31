@@ -1,31 +1,26 @@
 package MineSweeperGame;
 
 import MineSweeperGame.GUI.GUIGame;
-import MineSweeperGame.GUI.GamePanels;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
 
 class GUIGameStart extends JFrame {
 
     private static final GUIGame Table = new GUIGame();
     private static JFrame frame;
-    private static JPanel panel1;
-    private static JPanel panel2;
-    private static JPanel contain;
     private static Component component;
-    static int containc = 0;
 
 
-    public static int X, Y, B;
+    private static int X;
+    private static int Y;
+    private static int B;
     private static JSpinner x;
     private static JSpinner y;
     private static JSpinner b;
 
-
-    public static void GetValues() {
+    private static void GetValues() {
         X = (Integer) x.getValue();
         Y = (Integer) y.getValue();
         B = (Integer) b.getValue();
@@ -36,35 +31,20 @@ class GUIGameStart extends JFrame {
         try {
             // Sets UI as native, used in OS.
             if (System.getProperty("os.name").toLowerCase().contains("windows"))
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+                UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
             else if (System.getProperty("os.name").toLowerCase().contains("linux"))
                 UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
             else
                 UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         }
-        catch (UnsupportedLookAndFeelException e) {
-
+        catch (UnsupportedLookAndFeelException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+            System.out.println(e.getMessage());
         }
-        catch (ClassNotFoundException e) {
-            // handle exception
-        }
-        catch (InstantiationException e) {
-            // handle exception
-        }
-        catch (IllegalAccessException e) {
-            // handle exception
-        }
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                GUI();
-                System.out.println(System.getProperty("os.name"));
-            }
-        });
+        SwingUtilities.invokeLater(GUIGameStart::GUI);
     }
 
     private static JPanel addTopPanel() {
         JPanel panel = new JPanel();
-        //panel.add(GamePanels.toppanel());
         SpinnerModel modelx =
                 new SpinnerNumberModel(9, //initial value
                         5, //min
@@ -91,13 +71,11 @@ class GUIGameStart extends JFrame {
         panel.add(b);
         JButton startbutton = new JButton("Start Game");
         panel.add(startbutton);
-        startbutton.addActionListener(e -> {
-            actionPerformed(e);
-        });
+        startbutton.addActionListener(e -> actionPerformed());
         return panel;
     }
 
-    private static void actionPerformed(ActionEvent e) {
+    private static void actionPerformed() {
         for (Component con : frame.getComponents()) {
             if (con == component) {
                 frame.remove(con);
@@ -115,7 +93,7 @@ class GUIGameStart extends JFrame {
 
 
 
-    public static void GUI() {
+    private static void GUI() {
         frame = new JFrame("MineSweeperJava");
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

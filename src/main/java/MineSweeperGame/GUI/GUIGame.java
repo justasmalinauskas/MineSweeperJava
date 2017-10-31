@@ -38,25 +38,23 @@ public class GUIGame extends GameRules {
     }
 
     private void SetButtonsValues() {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    for (int y = 0; y < _table.GetYSize(); y++) {
-                        for (int x = 0; x < _table.GetXSize(); x++) {
-                            buttons[y][x].setText(String.valueOf(_visabletable.GetElement(x, y)));
-                            buttons[y][x].revalidate();
-                            buttons[y][x].repaint();
-                            buttons[y][x].setVisible(true);
-                        }
+        EventQueue.invokeLater(() -> {
+            try {
+                for (int y = 0; y < _table.GetYSize(); y++) {
+                    for (int x = 0; x < _table.GetXSize(); x++) {
+                        buttons[y][x].setText(String.valueOf(_visabletable.GetElement(x, y)));
+                        buttons[y][x].revalidate();
+                        buttons[y][x].repaint();
+                        buttons[y][x].setVisible(true);
                     }
-                } catch (NullPointerException ex) {
-                    System.out.println(ex.getMessage());
                 }
+            } catch (NullPointerException ex) {
+                System.out.println(ex.getMessage());
             }
         });
     }
 
-
+    /* Creates game table for GUI version */
     /**
      * @param x Number of rows in game
      * @param y Number of columns in game
@@ -84,7 +82,7 @@ public class GUIGame extends GameRules {
         return null;
     }
 
-    public void EndGame() {
+    private void EndGame() {
         //panel.getComponents().length;
         panel.removeAll();
         panel.revalidate();
@@ -98,11 +96,8 @@ public class GUIGame extends GameRules {
 
     }
 
-    /* Creates game table for GUI version */
-    @Override
-    public void CreateTable(int xsize, int ysize, int bombs) {
-        super.CreateTable(xsize, ysize, bombs);
-    }
+
+
 
     /* Game Over for GUI version */
     @Override
