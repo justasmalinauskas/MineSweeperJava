@@ -2,6 +2,7 @@ package MineSweeperGame.GUI;
 
 
 import javax.swing.*;
+import java.awt.*;
 
 public class GamePanels {
 
@@ -18,7 +19,7 @@ public class GamePanels {
     }
 
     public static JPanel toppanel() {
-        JPanel panel = new JPanel();
+        JPanel panel = new JPanel(new FlowLayout());
         SpinnerModel modelx =
                 new SpinnerNumberModel(9, //initial value
                         5, //min
