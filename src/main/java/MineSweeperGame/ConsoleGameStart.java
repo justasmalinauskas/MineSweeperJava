@@ -1,16 +1,15 @@
 package MineSweeperGame;
 
-import MineSweeperGame.Base.Exceptions.TooManyBombs;
-import MineSweeperGame.Base.Exceptions.TurnIsOutOfBounds;
-import MineSweeperGame.Console.ConsoleGame;
+import MineSweeperBase.Exceptions.*;
+import MineSweeperBase.Console.ConsoleGame;
 
 import java.util.Scanner;
 
 class ConsoleGameStart {
 
-    private static final ConsoleGame Table = new ConsoleGame();
+    private static ConsoleGame Table = ConsoleGame.getInstance();
 
-    public static void main(String[] args) throws TooManyBombs, TurnIsOutOfBounds {
+    public static void main(String[] args) throws TooManyBombs, TurnIsOutOfBounds, TablesSizeError {
         Table.CreateTable(9, 9, 10);
         while (Table.GetGameStatus()) {
             //Table.DrawTableInConsole();

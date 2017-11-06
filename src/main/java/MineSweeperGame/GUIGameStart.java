@@ -1,6 +1,6 @@
 package MineSweeperGame;
 
-import MineSweeperGame.GUI.GUIGame;
+import MineSweeperBase.GUI.GUIGame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +8,7 @@ import java.awt.*;
 
 class GUIGameStart extends JFrame {
 
-    private static GUIGame Table;// = new GUIGame();
+    private static GUIGame Table = GUIGame.getInstance();
     private static JFrame frame;
     private static Component component;
 

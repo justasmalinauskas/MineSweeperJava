@@ -1,4 +1,4 @@
-package MineSweeperGame.Base.Exceptions;
+package MineSweeperBase.Exceptions;
 
 public class TooManyBombs extends Exception {
 

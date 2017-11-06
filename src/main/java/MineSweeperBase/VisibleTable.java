@@ -1,8 +1,8 @@
-package MineSweeperGame.Base;
+package MineSweeperBase;
 
 public class VisibleTable {
 
-    private char[][] _visabletable;
+    private BlockType[][] _visabletable;
 
     VisibleTable(Table t) {
         CreateVisableTable(t);
@@ -12,17 +12,25 @@ public class VisibleTable {
     private void CreateVisableTable(Table t) {
         int xsize = t.GetXSize();
         int ysize = t.GetYSize();
-        _visabletable = new char[ysize][xsize];
+        _visabletable = new BlockType[ysize][xsize];
         for (int y = 0; y < ysize; y++) {
             for (int x = 0; x < xsize; x++) {
-                _visabletable[y][x] = '+';
+                _visabletable[y][x] = BlockType.BLOCK;
             }
         }
     }
 
+    public int GetXSize() {
+        return _visabletable[0].length;
+    }
+
+    public int GetYSize() {
+        return _visabletable.length;
+    }
+
     /* Checks if table field unrevealed */
     private boolean IfUnrevealed(int x, int y) {
-        return _visabletable[y][x] == '+';
+        return _visabletable[y][x] == BlockType.BLOCK;
     }
 
     /* Reveals part of empty cells if needed when empty cell selected */
@@ -53,9 +61,9 @@ public class VisibleTable {
     /* Counts how many unrevealed fields left in game table */
     private int BlanksLeft() {
         int blank = 0;
-        for (char[] a_visabletable : _visabletable) {
+        for (BlockType[] a_visabletable : _visabletable) {
             for (int x = 0; x < _visabletable[0].length; x++) {
-                if (a_visabletable[x] == '+') blank++;
+                if (a_visabletable[x] == BlockType.BLOCK) blank++;
             }
         }
         return blank;
@@ -66,11 +74,11 @@ public class VisibleTable {
     }
 
     /* Returns one element from visable game table */
-    public char GetElement(int x, int y) {
+    public BlockType GetElement(int x, int y) {
         return _visabletable[y][x];
     }
 
-    void SetTable(char[][] table) {
+    void SetTable(BlockType[][] table) {
         _visabletable = table;
     }
 }

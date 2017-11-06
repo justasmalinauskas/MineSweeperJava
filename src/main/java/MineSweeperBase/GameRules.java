@@ -1,19 +1,39 @@
-package MineSweeperGame.Base;
+package MineSweeperBase;
 
-import MineSweeperGame.Base.Exceptions.*;
+import MineSweeperBase.Exceptions.*;
 
 public class GameRules {
 
-    /* Variables used in MineSweeperGame.Base.GameRules class, used protected
+    /* Variables used in MineSweeperBase.GameRules class, used protected
     because I wanted my subclasses to see all information
     needed for stable work */
-    protected Table _table;
-    protected VisibleTable _visabletable;
+    private Table _table;
+    private VisibleTable _visabletable;
     private boolean _ingame = false;
 
     /* Constructor */
     protected GameRules() {
 
+    }
+
+    protected int GetXSize() throws TablesSizeError {
+        if (_table.GetXSize() == _visabletable.GetXSize()) {
+            return _table.GetXSize();
+        }
+        else
+            throw new TablesSizeError();
+    }
+
+    protected int GetYSize() throws TablesSizeError {
+        if (_table.GetYSize() == _visabletable.GetYSize()) {
+            return _table.GetYSize();
+        }
+        else
+            throw new TablesSizeError();
+    }
+
+    protected BlockType GetVisableElement(int x, int y) {
+        return _visabletable.GetElement(x, y);
     }
 
     protected void CleanTable() {
@@ -22,7 +42,7 @@ public class GameRules {
     }
 
     /* Creates game table for new game */
-    public void CreateTable(int xsize, int ysize, int bombs) throws TooManyBombs {
+    protected void CreateTable(int xsize, int ysize, int bombs) throws TooManyBombs, TablesSizeError {
         if (bombs < (xsize * ysize / 2) + 1) {
             _table = new Table(xsize, ysize, bombs);
             _visabletable = new VisibleTable(_table);
@@ -33,7 +53,7 @@ public class GameRules {
     }
 
     /* Makes game turn at specified coordinates */
-    protected void DoTurn(int x, int y) throws TurnIsOutOfBounds{
+    public void DoTurn(int x, int y) throws TurnIsOutOfBounds{
         if (!_table.IsOutOfBounds(x, y)) {
 
             if (_table.IsNumber(x, y)) _visabletable.DisplayElement(_table, x, y);
@@ -56,7 +76,7 @@ public class GameRules {
     }
 
     /* Checks if field cleared enough to win the game */
-    private void CheckIfWon() {
+    protected void CheckIfWon() {
         if (_table != null && _visabletable != null)
             if (_visabletable.PossibleWin(_table.GetBombsCount()) && _ingame) GameWin();
     }
@@ -67,8 +87,11 @@ public class GameRules {
     }
 
     /* Returns game status to player */
-    public boolean GetGameStatus() {
+    protected boolean GetGameStatus() {
         return _ingame;
     }
 
+    protected BlockType GetElement(int x, int y) {
+        return _visabletable.GetElement(x,y);
+    }
 }
