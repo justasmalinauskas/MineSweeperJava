@@ -1,6 +1,4 @@
-package MineSweeperBase.GUI;
-
-import MineSweeperBase.BlockType;
+package com.minesweeper.base;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

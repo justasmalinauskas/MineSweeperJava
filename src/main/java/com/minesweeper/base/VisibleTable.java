@@ -1,4 +1,4 @@
-package MineSweeperBase;
+package com.minesweeper.base;
 
 public class VisibleTable {
 

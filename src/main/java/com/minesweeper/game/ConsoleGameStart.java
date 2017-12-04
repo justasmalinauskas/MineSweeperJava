@@ -1,7 +1,9 @@
-package MineSweeperGame;
+package com.minesweeper.game;
 
-import MineSweeperBase.Exceptions.*;
-import MineSweeperBase.Console.ConsoleGame;
+import com.minesweeper.base.ConsoleGame;
+import com.minesweeper.base.TablesSizeError;
+import com.minesweeper.base.TooManyBombs;
+import com.minesweeper.base.TurnIsOutOfBounds;
 
 import java.util.Scanner;
 

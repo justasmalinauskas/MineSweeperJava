@@ -1,9 +1,4 @@
-package MineSweeperBase.Console;
-
-import MineSweeperBase.Exceptions.TablesSizeError;
-import MineSweeperBase.Exceptions.TooManyBombs;
-import MineSweeperBase.Exceptions.TurnIsOutOfBounds;
-import MineSweeperBase.*;
+package com.minesweeper.base;
 
 public class ConsoleGame extends GameRules {
 
