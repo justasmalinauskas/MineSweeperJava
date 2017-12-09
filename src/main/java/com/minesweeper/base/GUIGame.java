@@ -1,11 +1,7 @@
-package MineSweeperBase.GUI;
-
-import MineSweeperBase.Exceptions.*;
-import MineSweeperBase.*;
+package com.minesweeper.base;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 public class GUIGame extends GameRules {
 
@@ -57,15 +53,11 @@ public class GUIGame extends GameRules {
 
     private void SetButtonsValues() {
         EventQueue.invokeLater(() -> {
-            try {
-                for (int y = 0; y < instance.GetYSize(); y++) {
-                    for (int x = 0; x < instance.GetXSize(); x++) {
-                        ImageIcon icon = GetButtonIconPath(x, y);
-                        buttons[y][x].setIcon(icon);
-                    }
+            for (int y = 0; y < instance.GetYSize(); y++) {
+                for (int x = 0; x < instance.GetXSize(); x++) {
+                    ImageIcon icon = GetButtonIconPath(x, y);
+                    buttons[y][x].setIcon(icon);
                 }
-            } catch (TablesSizeError ex) {
-                ex.printStackTrace();
             }
         });
     }

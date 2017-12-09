@@ -1,4 +1,4 @@
-package MineSweeperBase.Exceptions;
+package com.minesweeper.base;
 
 public class TurnIsOutOfBounds extends Exception {
 

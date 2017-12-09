@@ -1,4 +1,4 @@
-package MineSweeperBase.Exceptions;
+package com.minesweeper.base;
 
 public class TablesSizeError extends Exception {
     private final String message = "Visable Table and Games table sizes doesn't match!";

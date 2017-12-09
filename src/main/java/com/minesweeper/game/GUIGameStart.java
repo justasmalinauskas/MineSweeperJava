@@ -1,6 +1,6 @@
-package MineSweeperGame;
+package com.minesweeper.game;
 
-import MineSweeperBase.GUI.GUIGame;
+import com.minesweeper.base.GUIGame;
 
 import javax.swing.*;
 import java.awt.*;
