@@ -1,17 +1,10 @@
 package MineSweeperTests;
 
-import MineSweeperBase.BlockType;
+import MineSweeperBase.Console.ConsoleGame;
 import MineSweeperBase.Exceptions.TablesSizeError;
 import MineSweeperBase.Exceptions.TooManyBombs;
 import MineSweeperBase.Exceptions.TurnIsOutOfBounds;
-import MineSweeperBase.Console.ConsoleGame;
-import MineSweeperBase.GameRules;
-import MineSweeperBase.Table;
-import org.junit.*;
-import org.mockito.Mockito;
-
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
