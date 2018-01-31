@@ -3,37 +3,32 @@ package com.minesweeper.base;
 
 public class GameRules {
 
-    /* Variables used in GameRules class, used protected
-    because I wanted my subclasses to see all information
-    needed for stable work */
     private Table table;
     private VisibleTable visibleTable;
     private boolean ingame = false;
 
-    /* Constructor */
     protected GameRules() {
 
     }
 
-    protected int GetXSize()  {
-        return table.GetXSize();
+    protected int getXSize()  {
+        return table.getXSize();
     }
 
-    protected int GetYSize(){
-        return table.GetYSize();
+    protected int getYSize(){
+        return table.getYSize();
     }
 
-    protected BlockType GetVisableElement(int x, int y) {
-        return visibleTable.GetElement(x, y);
+    protected BlockType getVisableElement(int x, int y) {
+        return visibleTable.getElement(x, y);
     }
 
-    protected void CleanTable() {
+    protected void cleanTable() {
         table = null;
         visibleTable = null;
     }
 
-    /* Creates game table for new game */
-    protected void CreateTable(int xsize, int ysize, int bombs) throws TooManyBombs, TablesSizeError {
+    protected void createTable(int xsize, int ysize, int bombs) throws TooManyBombs, TablesSizeError {
         if (bombs < (xsize * ysize / 2) + 1) {
             table = new Table(xsize, ysize, bombs);
             visibleTable = new VisibleTable(table);
@@ -43,46 +38,40 @@ public class GameRules {
             throw new TooManyBombs();
     }
 
-    /* Makes game turn at specified coordinates */
-    public void DoTurn(int x, int y) throws TurnIsOutOfBounds {
-        if (!table.IsOutOfBounds(x, y)) {
+    public void doTurn(int x, int y) throws TurnIsOutOfBounds {
+        if (!table.isOutOfBounds(x, y)) {
 
-            if (table.IsNumber(x, y)) visibleTable.DisplayElement(table, x, y);
-            if (table.IsNumberZero(x, y)) visibleTable.DisplayElements(table, x, y);
-            if (table.IsBomb(x, y)) {
-                visibleTable.DisplayAllElements(table);
-                GameOver();
+            if (table.isNumber(x, y)) visibleTable.displayElement(table, x, y);
+            if (table.isNumberZero(x, y)) visibleTable.displayElements(table, x, y);
+            if (table.isBomb(x, y)) {
+                visibleTable.displayAllElements(table);
+                gameOver();
             }
-            CheckIfWon();
+            checkIfWon();
         }
         else
             throw new TurnIsOutOfBounds();
-
     }
 
-    /* Prints that game over and stops current game */
-    protected void GameOver() {
-        visibleTable.SetTable(table.GetTable());
+    protected void gameOver() {
+        visibleTable.setTable(table.getTable());
         ingame = false;
     }
 
-    /* Checks if field cleared enough to win the game */
-    protected void CheckIfWon() {
+    protected void checkIfWon() {
         if (table != null && visibleTable != null)
-            if (visibleTable.PossibleWin(table.GetBombsCount()) && ingame) GameWin();
+            if (visibleTable.possibleWin(table.getBombsCount()) && ingame) gameWin();
     }
 
-    /* method returned when game is won */
-    protected void GameWin() {
-        GameOver();
+    protected void gameWin() {
+        gameOver();
     }
 
-    /* Returns game status to player */
-    protected boolean GetGameStatus() {
+    protected boolean getGameStatus() {
         return ingame;
     }
 
-    protected BlockType GetElement(int x, int y) {
-        return visibleTable.GetElement(x,y);
+    protected BlockType getElement(int x, int y) {
+        return visibleTable.getElement(x,y);
     }
 }

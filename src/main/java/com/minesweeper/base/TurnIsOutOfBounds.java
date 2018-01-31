@@ -8,7 +8,7 @@ public class TurnIsOutOfBounds extends Exception {
         super();
     }
 
-    public void Message() {
+    public void message() {
         System.out.println(message);
     }
 

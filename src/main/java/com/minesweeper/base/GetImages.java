@@ -21,6 +21,10 @@ class GetImages {
     private ImageIcon bomb;// = new ImageIcon(ImageIO.read(new File(getClass().getClassLoader().getResource("bomb.png").getFile())).getScaledInstance(45,-1, Image.SCALE_SMOOTH));
 
     public GetImages() {
+        initImages();
+    }
+
+    private void initImages() {
         try {
             zero = new ImageIcon(ImageIO.read(new File(getClass().getClassLoader().getResource("0.png").getFile())).getScaledInstance(45,-1, Image.SCALE_SMOOTH));
             one = new ImageIcon(ImageIO.read(new File(getClass().getClassLoader().getResource("1.png").getFile())).getScaledInstance(45,-1, Image.SCALE_SMOOTH));
@@ -37,32 +41,33 @@ class GetImages {
         catch (IOException e) {
 
         }
-
     }
     
-    public ImageIcon GetImage(BlockType id) {
-        if (id == BlockType.ZERO)
-            return zero;
-        if (id == BlockType.ONE)
-            return one;
-        if (id == BlockType.TWO)
-            return two;
-        if (id == BlockType.THREE)
-            return three;
-        if (id == BlockType.FOUR)
-            return four;
-        if (id == BlockType.FIVE)
-            return five;
-        if (id == BlockType.SIX)
-            return six;
-        if (id == BlockType.SEVEN)
-            return seven;
-        if (id == BlockType.EIGHT)
-            return eight;
-        if (id == BlockType.BLOCK)
-            return block;
-        if (id == BlockType.BOMB)
-            return bomb;
-        return null;
+    public ImageIcon getImage(BlockType id) {
+        switch (id) {
+            case ZERO:
+                return zero;
+            case ONE:
+                return one;
+            case TWO:
+                return two;
+            case THREE:
+                return three;
+            case FOUR:
+                return four;
+            case FIVE:
+                return five;
+            case SIX:
+                return six;
+            case SEVEN:
+                return seven;
+            case EIGHT:
+                return eight;
+            case BLOCK:
+                return block;
+            default:
+                return bomb;
+
+        }
     }
 }

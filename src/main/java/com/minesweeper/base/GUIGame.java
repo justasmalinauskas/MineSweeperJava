@@ -8,8 +8,6 @@ public class GUIGame extends GameRules {
     private JPanel panel;
     private JButton[][] buttons = null;
     private GetImages images;
-
-
     private static GUIGame instance;
 
     public static GUIGame getInstance() {
@@ -19,28 +17,24 @@ public class GUIGame extends GameRules {
         return instance;
     }
 
-    private JPanel Display() throws TablesSizeError {
+    private JPanel display() throws TablesSizeError {
         if (instance != null) {
             JPanel gametable = new JPanel();
-            gametable.setLayout(new GridLayout(instance.GetYSize(), instance.GetXSize()));
+            gametable.setLayout(new GridLayout(instance.getYSize(), instance.getXSize()));
             gametable.setBorder(BorderFactory.createLineBorder(Color.red));
-            buttons = new JButton[instance.GetYSize()][instance.GetXSize()];
-            for (int ypos = 0; ypos < instance.GetYSize(); ypos++) {
-                for (int xpos = 0; xpos < instance.GetXSize(); xpos++) {
+            buttons = new JButton[instance.getYSize()][instance.getXSize()];
+            for (int ypos = 0; ypos < instance.getYSize(); ypos++) {
+                for (int xpos = 0; xpos < instance.getXSize(); xpos++) {
                     final int y = ypos;
                     final int x = xpos;
-                    //buttons[y][x] = new JButton(String.valueOf(_visabletable.GetElement(x, y)));
                     buttons[y][x] = new JButton();
-                    //buttons[y][x].revalidate();
-                    //buttons[y][x].repaint();
-                    //buttons[y][x].setVisible(true);
                     buttons[y][x].addActionListener(e -> {
                         try {
-                            instance.DoTurn(x, y);
-                        } catch (TurnIsOutOfBounds ex) {
-                            ex.Message();
+                            instance.doTurn(x, y);
+                        } catch (TurnIsOutOfBounds turnIsOutOfBounds) {
+                            turnIsOutOfBounds.printStackTrace();
                         }
-                        SetButtonsValues();
+                        setButtonsValues();
                     });
                     gametable.add(buttons[y][x]);
                 }
@@ -51,80 +45,65 @@ public class GUIGame extends GameRules {
         return new JPanel();
     }
 
-    private void SetButtonsValues() {
+    private void setButtonsValues() {
         EventQueue.invokeLater(() -> {
-            for (int y = 0; y < instance.GetYSize(); y++) {
-                for (int x = 0; x < instance.GetXSize(); x++) {
-                    ImageIcon icon = GetButtonIconPath(x, y);
+            for (int y = 0; y < instance.getYSize(); y++) {
+                for (int x = 0; x < instance.getXSize(); x++) {
+                    ImageIcon icon = getButtonIconPath(x, y);
                     buttons[y][x].setIcon(icon);
                 }
             }
         });
     }
 
-    /* Creates game table for GUI version */
-
-    /**
-     * @param x Number of rows in game
-     * @param y Number of columns in game
-     * @param b Count of bombs in game, it should be less than half of all game table
-     */
-    public JPanel StartGame(int x, int y, int b) {
+    public JPanel startGame(int x, int y, int b) {
         if (panel != null) {
             if (panel.getComponents().length > 0) {
                 System.out.println("Gametable has " + panel.getComponents().length + " buttons");
-                EndGame();
+                endGame();
             }
         }
         try {
             images = new GetImages();
-            instance.CreateTable(x, y, b);
-            panel = this.Display();
+            instance.createTable(x, y, b);
+            panel = this.display();
             panel.revalidate();
             panel.repaint();
-            SetButtonsValues();
+            setButtonsValues();
             panel.setVisible(true);
             return panel;
-        }
-        catch (TooManyBombs ex) {
-         ex.Message();
         } catch (TablesSizeError e) {
             e.printStackTrace();
+        } catch (TooManyBombs tooManyBombs) {
+            tooManyBombs.printStackTrace();
         }
         return null;
     }
 
-    private void EndGame() {
-        //panel.getComponents().length;
+    private void endGame() {
         panel.removeAll();
         panel.revalidate();
         panel.repaint();
         panel.setVisible(true);
-        instance.CleanTable();
+        instance.cleanTable();
     }
 
-
-
-    /* Game Over for GUI version */
     @Override
-    protected void GameOver() {
-        super.GameOver();
-
+    protected void gameOver() {
+        setButtonsValues();
+        super.gameOver();
         JOptionPane.showMessageDialog(null, "Game Over!");
-        SetButtonsValues();
+
     }
 
-    /* Game Won for GUI version */
     @Override
-    protected void GameWin() {
-        super.GameOver();
-        SetButtonsValues();
+    protected void gameWin() {
+        super.gameOver();
+        setButtonsValues();
         JOptionPane.showMessageDialog(null, "You Won!");
     }
 
-    private ImageIcon GetButtonIconPath(int x, int y) {
-        return images.GetImage(instance.GetElement(x, y));
+    private ImageIcon getButtonIconPath(int x, int y) {
+        return images.getImage(instance.getElement(x, y));
     }
-
-
 }

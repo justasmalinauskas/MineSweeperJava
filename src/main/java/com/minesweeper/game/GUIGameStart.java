@@ -20,7 +20,7 @@ class GUIGameStart extends JFrame {
     private static JSpinner y;
     private static JSpinner b;
 
-    private static void GetValues() {
+    private static void getValues() {
         X = (Integer) x.getValue();
         Y = (Integer) y.getValue();
         B = (Integer) b.getValue();
@@ -83,8 +83,8 @@ class GUIGameStart extends JFrame {
                 System.out.println("removed");
             }
         }
-        GetValues();
-        component = Table.StartGame(X, Y, B);
+        getValues();
+        component = Table.startGame(X, Y, B);
         frame.add(component, BorderLayout.CENTER);
         frame.repaint();
         frame.revalidate();

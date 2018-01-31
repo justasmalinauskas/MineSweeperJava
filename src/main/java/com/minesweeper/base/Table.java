@@ -12,54 +12,62 @@ public class Table {
         this._xsize = xsize;
         this._ysize = ysize;
         this._bombs = bombs;
-        GetEmptyCharTable();
-        SetBombs();
-        CalcBombsDistance();
-        MakeItEnumOne();
+        getEmptyCharTable();
+        setBombs();
+        calcBombsDistance();
+        makeItEnumOne();
     }
 
-    private void MakeItEnumOne() {
+    private void makeItEnumOne() {
         _table = new BlockType[_ysize][_xsize];
         for (int y = 0; y < _ysize; y++) {
             for (int x = 0; x < _xsize; x++) {
-                if (_chartable[y][x] == '0')
-                    _table[y][x] = BlockType.ZERO;
-                if (_chartable[y][x] == '1')
-                    _table[y][x] = BlockType.ONE;
-                if (_chartable[y][x] == '2')
-                    _table[y][x] = BlockType.TWO;
-                if (_chartable[y][x] == '3')
-                    _table[y][x] = BlockType.THREE;
-                if (_chartable[y][x] == '4')
-                    _table[y][x] = BlockType.FOUR;
-                if (_chartable[y][x] == '5')
-                    _table[y][x] = BlockType.FIVE;
-                if (_chartable[y][x] == '6')
-                    _table[y][x] = BlockType.SIX;
-                if (_chartable[y][x] == '7')
-                    _table[y][x] = BlockType.SEVEN;
-                if (_chartable[y][x] == '8')
-                    _table[y][x] = BlockType.EIGHT;
-                if (_chartable[y][x] == '*')
-                    _table[y][x] = BlockType.BOMB;
+                switch (_chartable[y][x]) {
+                    case '0':
+                        _table[y][x] = BlockType.ZERO;
+                        break;
+                    case '1':
+                        _table[y][x] = BlockType.ONE;
+                        break;
+                    case '2':
+                        _table[y][x] = BlockType.TWO;
+                        break;
+                    case '3':
+                        _table[y][x] = BlockType.THREE;
+                        break;
+                    case '4':
+                        _table[y][x] = BlockType.FOUR;
+                        break;
+                    case '5':
+                        _table[y][x] = BlockType.FIVE;
+                        break;
+                    case '6':
+                        _table[y][x] = BlockType.SIX;
+                        break;
+                    case '8':
+                        _table[y][x] = BlockType.EIGHT;
+                        break;
+                    default:
+                        _table[y][x] = BlockType.BOMB;
+                        break;
 
+
+                }
             }
         }
     }
 
-    /* Creates 'empty' table filled with 'zeroes' */
-    private void GetEmptyCharTable() {
+    private void getEmptyCharTable() {
         _chartable = new char[_ysize][_xsize];
         for (int y = 0; y < _ysize; y++) {
             for (int x = 0; x < _xsize; x++) _chartable[y][x] = '0';
         }
     }
 
-    /* Makes bombs for game also calculates nearby bombs in 3x3 array from bomb */
-    private void SetBombs() {
+    private void setBombs() {
         int usedbombs = 0;
         while (usedbombs < _bombs) {
-            int[] xy = GetRandomInt();
+            int[] xy = getRandomInt();
             if (_chartable[xy[0]][xy[1]] != '*') {
                 _chartable[xy[0]][xy[1]] = '*';
                 usedbombs++;
@@ -67,18 +75,15 @@ public class Table {
         }
 
     }
-    /* Calculating how much bombs are in 3x3 area
-        (avoiding out of bound exception)
-        around each cell excluding bombs cell itself */
-    private void CalcBombsDistance() {
 
+    private void calcBombsDistance() {
         for (int y = 0; y < _ysize; y++) {
             for (int x = 0; x < _xsize; x++) {
                 if (_chartable[y][x] != '*') {
                     for (int yt = Math.max(0, y - 1); yt < Math.min(y + 2, _ysize); yt++) {
                         for (int xt = Math.max(0, x - 1); xt < Math.min(x + 2, _xsize); xt++) {
                             if (xt != x || yt != y)
-                                if (_chartable[yt][xt] == '*') _chartable[y][x] = IntToChar(CharToInt(_chartable[y][x]) + 1);
+                                if (_chartable[yt][xt] == '*') _chartable[y][x] = intToChar(charToInt(_chartable[y][x]) + 1);
                         }
                     }
                 }
@@ -86,62 +91,54 @@ public class Table {
         }
     }
 
-    /* Converts character to integer */
-    private int CharToInt(char i) {
+    private int charToInt(char i) {
         return Character.getNumericValue(i);
     }
 
-    /* Converts integer to character */
-    private char IntToChar(int i) {
+    private char intToChar(int i) {
         return Character.forDigit(i, 10);
     }
 
-    /* Makes a random coordinate */
-    private int[] GetRandomInt() {
+    private int[] getRandomInt() {
         int[] answer = new int[2];
         answer[0] = (int) (Math.random() * _ysize);
         answer[1] = (int) (Math.random() * _xsize);
         return answer;
     }
 
-    /* Returns Table to other classes */
-    BlockType[][] GetTable() {
+    protected BlockType[][] getTable() {
         return _table;
     }
 
-    /* Get Table size in X dimension */
-    public int GetXSize() {
+    public int getXSize() {
         return _xsize;
     }
 
-    /* Get Table size in Y dimension */
-    public int GetYSize() {
+    public int getYSize() {
         return _ysize;
     }
 
-    /* Get bombs count in table */
-    int GetBombsCount() {
+    protected int getBombsCount() {
         return _bombs;
     }
 
-    public BlockType GetElement(int x, int y) {
+    public BlockType getElement(int x, int y) {
         return _table[y][x];
     }
 
-    boolean IsOutOfBounds(int x, int y) {
+    protected boolean isOutOfBounds(int x, int y) {
         return x < 0 || y < 0 || x > _xsize || y > _ysize;
     }
 
-    /* Checks if number pressed */
-    boolean IsNumber(int x, int y) {
+    protected boolean isNumber(int x, int y) {
         return _table[y][x] != BlockType.BOMB && _table[y][x] != BlockType.ZERO;
     }
 
-    boolean IsNumberZero(int x, int y) {
+    protected boolean isNumberZero(int x, int y) {
         return _table[y][x] == BlockType.ZERO;
     }
 
-    boolean IsBomb(int x, int y) {
+    protected boolean isBomb(int x, int y) {
         return _table[y][x] == BlockType.BOMB;
     }
 
