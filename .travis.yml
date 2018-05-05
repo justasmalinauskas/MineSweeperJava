@@ -1,6 +1,11 @@
 language: java
 
-script: "mvn cobertura:cobertura"
+script: 
+  "mvn cobertura:cobertura"
+  mvn sonar:sonar \
+  -Dsonar.organization=justasmalinauskas-github \
+  -Dsonar.host.url=https://sonarcloud.io \
+  -Dsonar.login=justasgithub
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
